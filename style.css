@@ -9,7 +9,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #fbefcc;
+  background-color: #cfe0e8;
 }
 
 html {
@@ -305,7 +305,7 @@ section {
   border: rgb(53, 53, 53) 0.1rem solid;
   border-color: rgb(163, 163, 163);
   text-align: center;
-  background-color: #f9ccac;
+  background-color: #615545;
 }
 
 .section-container {
@@ -387,7 +387,7 @@ p {
 
 .color-container {
   border-color: rgb(163, 163, 163);
-  background: #f9ccac;
+  background: #b7d7e8;
 }
 
 .project-img {
@@ -435,7 +435,7 @@ p {
   border-radius: 2rem;
   border: rgb(53, 53, 53) 0.1rem solid;
   border-color: rgb(163, 163, 163);
-  background: #f9ccac;
+  background: #b7d7e8;
   margin: 2rem auto;
   padding: 0.5rem;
 }
