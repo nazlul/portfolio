@@ -1,6 +1,19 @@
-import { useEffect, useRef } from 'react';
+'use client';
+
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import Scene from './Scene';
+
+const Scene = lazy(() => import('./Scene'));
+
+const name = 'Nazlul Rizan';
+const nameVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.05 },
+  }),
+};
 
 const Hero = () => {
   const typingRef = useRef<HTMLDivElement>(null);
@@ -18,16 +31,16 @@ const Hero = () => {
         typingElement.textContent = text;
         clearInterval(typingInterval);
       }
-    }, 100);
+    }, 80);
     return () => clearInterval(typingInterval);
   }, []);
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
-      <div className="max-w-5xl w-full text-center md:text-left">
+      <div className="max-w-5xl w-full text-center md:text-left z-10 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,18 +49,36 @@ const Hero = () => {
         >
           <span className="text-lg md:text-xl text-[#fffde8]">Hello, I'm</span>
         </motion.div>
-        <span className="text-4xl md:text-6xl lg:text-7xl mb-4 font-bold text-[#fffde8]">
-          Nazlul Rizan
-        </span>
-        <motion.h1
+
+        <h1 className="flex flex-wrap text-4xl md:text-6xl lg:text-7xl mb-4 font-bold text-[#fffde8]">
+          {name.split('').map((char, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              whileHover={{
+                y: -10,
+                textShadow: '0px 0px 8px #fffde8',
+                transition: { duration: 0.2, ease: 'easeOut' },
+              }}
+              className="inline-block cursor-default"
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          ))}
+        </h1>
+        
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
+          className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-[#fffde8]"
         >
-          <span className="text-[#fffde8]">Web Developer</span>
-        </motion.h1>
-        <Scene />
+          Web Developer
+        </motion.h2>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -57,6 +88,7 @@ const Hero = () => {
         >
           |
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,11 +111,18 @@ const Hero = () => {
           </a>
         </motion.div>
       </div>
+
+      <div className="absolute inset-0 pointer-events-none lg:translate-x-[10vw]">
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
+      </div>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10"
       >
         <a
           href="#about"
@@ -93,14 +132,13 @@ const Hero = () => {
           <div className="w-5 h-10 border-2 border-[#fffde8] rounded-full flex justify-center pt-1">
             <motion.div
               animate={{ y: [0, 12, 0], opacity: [0, 1, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
+              transition={{ duration: 1.5, repeat: Infinity }}
               className="w-1.5 h-1.5 bg-[#fffde8] rounded-full"
             />
           </div>
         </a>
       </motion.div>
 
-      {/* Scoped CSS for glowing effect */}
       <style>{`
         .btn-glow:hover {
           box-shadow:

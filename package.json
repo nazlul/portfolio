@@ -12,10 +12,11 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@radix-ui/react-hover-card": "^1.1.14",
-    "@react-three/fiber": "^8.13.7",
+    "@react-three/fiber": "^8.18.0",
     "@tabler/icons-react": "^3.34.0",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.5.4",
+    "drei": "^2.2.21",
+    "framer-motion": "^11.18.2",
     "lucide-react": "^0.441.0",
     "motion": "^12.18.1",
     "qss": "^3.0.0",
