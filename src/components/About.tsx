@@ -37,7 +37,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="relative z-10 bg-[#fffde8] py-20 px-4">
+    <section id="about" className="relative bg-[#fffde8] py-20 px-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: isMobile ? 12 : 20 }}

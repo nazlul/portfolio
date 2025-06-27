@@ -8,7 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background from './components/Background';
 export function App() {
-  return <div className="relative min-h-screen text-white">
+  return <div className="relative min-h-screen">
     <CustomCursor />
       <Background />
       <Navbar />

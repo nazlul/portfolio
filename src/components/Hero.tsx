@@ -6,14 +6,6 @@ import { motion } from 'framer-motion';
 const Scene = lazy(() => import('./Scene'));
 
 const name = 'Nazlul Rizan';
-const nameVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.05 },
-  }),
-};
 
 const Hero = () => {
   const typingRef = useRef<HTMLDivElement>(null);
