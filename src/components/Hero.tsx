@@ -42,7 +42,7 @@ const Hero = () => {
           <span className="text-lg md:text-xl text-[#fffde8]">Hello, I'm</span>
         </motion.div>
 
-        <h1 className="flex flex-wrap text-4xl md:text-6xl lg:text-7xl mb-4 font-bold text-[#fffde8]">
+        <h1 className="flex flex-wrap justify-center lg:justify-start text-4xl md:text-6xl lg:text-7xl mb-4 font-bold text-[#fffde8]">
           {name.split('').map((char, i) => (
             <motion.span
               key={i}
@@ -85,7 +85,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4"
+          className="flex flex-col md:flex-row items-center justify-center lg:justify-start gap-4"
         >
           <a
             href="/Naz_Resume.pdf"
