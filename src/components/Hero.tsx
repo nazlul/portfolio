@@ -32,7 +32,11 @@ const Hero = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a]/70"
     >
-      <div className="max-w-5xl w-full text-center md:text-left z-10 px-4">
+      <div className="max-w-5xl w-full z-10 px-4
+                      text-center
+                      md:text-left
+                      md:flex md:flex-col md:items-start md:justify-center
+                      lg:text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,7 +65,7 @@ const Hero = () => {
             </motion.span>
           ))}
         </h1>
-        
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -139,6 +143,21 @@ const Hero = () => {
             0 0 24px #a9170a,
             0 0 32px #a9170a;
           transition: box-shadow 0.3s ease;
+        }
+        @media (max-width: 1023px) {
+          #home > div {
+            text-align: center !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+          #home h1 {
+            justify-content: center !important;
+          }
+          #home div > div:last-child {
+            justify-content: center !important;
+          }
         }
       `}</style>
     </section>
