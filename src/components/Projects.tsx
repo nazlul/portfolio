@@ -55,8 +55,9 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="py-12 px-4 sm:px-10 md:px-20 lg:px-40">
-      <h2 className="text-3xl font-bold text-center mb-10 text-[#fffde8]">Projects</h2>
+    <section id="projects" className="py-12 px-4 sm:px-10 md:px-20 lg:px-40 bg-[#a9170a]/70">
+      <h2 className="text-3xl font-bold text-center mb-3 text-[#fffde8]">Projects</h2>
+      <div className="mx-auto h-1 w-20 bg-[#fffde8] mb-10" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {projects.map((project, idx) => (
           <CardContainer key={idx} className="inter-var">

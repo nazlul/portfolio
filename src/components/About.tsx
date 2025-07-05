@@ -37,7 +37,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="relative bg-[#fffde8] py-20 px-4">
+    <section id="about" className="relative bg-[#fffde8]/80 py-20 px-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: isMobile ? 12 : 20 }}
@@ -50,7 +50,7 @@ const About = () => {
               About Me
             </span>
           </h2>
-          <div className="mx-auto h-1 w-20 bg-[#fffde8]" />
+          <div className="mx-auto h-1 w-20 bg-[#a9170a]" />
         </motion.div>
 
         <div className="grid gap-12 md:grid-cols-2 min-h-[40vh]">

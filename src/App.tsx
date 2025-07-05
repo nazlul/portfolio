@@ -7,9 +7,12 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background from './components/Background';
+import ScrollImageSequence from './components/ScrollImageSequence';
+
 export function App() {
   return <div className="relative min-h-screen">
     <CustomCursor />
+    <ScrollImageSequence />
       <Background />
       <Navbar />
       <main className="relative z-10">

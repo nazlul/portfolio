@@ -134,7 +134,7 @@ export default function Scene() {
         width: '100vw',
         height: '100vh',
         overflow: 'hidden',
-        zIndex: -1,
+        zIndex: 1,
       }}
     />
   );
