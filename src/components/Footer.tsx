@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { GithubIcon, TwitterIcon, LinkedinIcon, InstagramIcon, ArrowUpIcon } from 'lucide-react';
+import { GithubIcon, TwitterIcon, LinkedinIcon, ArrowUpIcon } from 'lucide-react';
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -38,7 +38,7 @@ const Footer = () => {
         }} transition={{
           duration: 0.5,
           delay: 0.4
-        }} className="flex space-x-4 mb-8">
+        }} className="flex space-x-4 mb-8 cursor-link">
             <a href="https://www.github.com/nazlul/" target="_blank" className="bg-[#a9170a] p-2 rounded-full hover:bg-[#831010] transition-colors" aria-label="GitHub">
               <GithubIcon size={20} className="text-white" />
             </a>
@@ -56,7 +56,7 @@ const Footer = () => {
         }} transition={{
           duration: 0.5,
           delay: 0.6
-        }} className="flex flex-wrap justify-center gap-6 mb-8">
+        }} className="flex flex-wrap justify-center gap-6 mb-8 cursor-link">
             <a href="#home" className="text-[#a9170a] hover:text-[#831010] transition-colors">
               Home
             </a>

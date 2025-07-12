@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 
 function getRGBValues(color: string) {
@@ -37,6 +38,7 @@ function findCursorColor(el: HTMLElement | null): string | null {
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [color, setColor] = useState('#fffde8')
+  const [noPulse, setNoPulse] = useState(false)
   const [isTouch, setIsTouch] = useState(false)
 
   useEffect(() => {
@@ -49,7 +51,9 @@ export default function CustomCursor() {
 
     const move = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
-      let el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null
+      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null
+      setNoPulse(!!el?.closest('.cursor-link'))
+
       const manualColor = findCursorColor(el)
       if (manualColor) {
         setColor(manualColor)
@@ -78,6 +82,12 @@ export default function CustomCursor() {
             transform: translate(-50%, -50%) scale(2);
           }
         }
+        .custom-cursor.pulsing {
+          animation: pulse 1.5s ease-in-out infinite;
+        }
+        .custom-cursor.fixed {
+          transform: translate(-50%, -50%) scale(1);
+        }
         @media (max-width: 768px) {
           .custom-cursor {
             display: none !important;
@@ -85,7 +95,7 @@ export default function CustomCursor() {
         }
       `}</style>
       <div
-        className="custom-cursor"
+        className={`custom-cursor ${noPulse ? 'fixed' : 'pulsing'}`}
         style={{
           position: 'fixed',
           top: position.y,
@@ -96,7 +106,6 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           backgroundColor: color,
           zIndex: 9999,
-          animation: 'pulse 1.5s ease-in-out infinite',
         }}
       />
     </>

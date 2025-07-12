@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 export default function ScrollImageSequence() {
-  const TOTAL_FRAMES = 300
+  const TOTAL_FRAMES = 600
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imagesRef = useRef<HTMLImageElement[]>([])
   const decodedFrames = useRef(new Set<number>())

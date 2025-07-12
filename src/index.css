@@ -20,6 +20,10 @@
   cursor: none !important;
 }
 
+.cursor-link {
+  --cursor-scale: 1;
+}
+
 html, body {
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
@@ -28,4 +32,6 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+
 

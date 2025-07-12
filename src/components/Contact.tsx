@@ -132,7 +132,7 @@ const Contact = () => {
                         href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(value)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#a9170a] underline"
+                        className="text-[#a9170a] underline cursor-link"
                       >
                         {value}
                       </a>
@@ -198,7 +198,7 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className={`w-full px-6 py-3 bg-gradient-to-r from-[#a9170a] to-[#831010] text-[#fffde8] font-medium rounded-lg flex items-center justify-center gap-2 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#a9170a]/90'}`}
+                      className={`w-full px-6 py-3 cursor-link bg-[#a9170a] hover:bg-[#831010] text-[#fffde8] font-medium rounded-lg flex items-center justify-center gap-2 transition-all ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#831010]'}`}
                     >
                       {isSubmitting ? (
                         <>

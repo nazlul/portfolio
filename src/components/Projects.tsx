@@ -21,6 +21,13 @@ const projects = [
     codeLink: "https://github.com/nazlul/lifeliner",
   },
   {
+    title: "LOCALCONNECT AI",
+    description: "A life saving initiative by Baby Memorial Hospital.",
+    image: "/localconnectai.mp4",
+    demoLink: "https://localconnectai.vercel.app/",
+    codeLink: "https://github.com/nazlul/localconnectai",
+  },
+  {
     title: "Base Loans App",
     description: "A yield dapp built on base mainnet.",
     image: "/loans.mp4",
@@ -104,7 +111,7 @@ export default function Projects() {
                       href={project.demoLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[#a9170a] hover:underline"
+                      className="inline-flex items-center gap-1 text-[#a9170a] hover:underline cursor-link"
                     >
                       <ExternalLinkIcon size={18} />
                       Live
@@ -116,7 +123,7 @@ export default function Projects() {
                   as="a"
                   href={project.codeLink}
                   target="_blank"
-                  className="px-4 py-2 rounded-xl bg-white dark:bg-black text-black dark:text-white text-xs font-bold"
+                  className="px-4 py-2 rounded-xl bg-white dark:bg-black text-black dark:text-white text-xs font-bold cursor-link"
                 >
                   <GithubIcon size={18} />
                 </CardItem>

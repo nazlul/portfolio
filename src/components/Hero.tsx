@@ -95,13 +95,13 @@ const Hero = () => {
             href="/Naz_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-glow px-8 py-3 bg-[#fffde8] rounded-full text-[#831010] font-medium transition-transform hover:scale-105"
+            className="cursor-link btn-glow px-8 py-3 bg-[#fffde8] rounded-full text-[#831010] font-medium transition-transform hover:scale-105"
           >
             Resume
           </a>
           <a
             href="#contact"
-            className="btn-glow px-8 py-3 border border-[#fffde8] rounded-full text-[#fffde8] font-medium transition-all hover:bg-[#24243e]/10"
+            className="cursor-link btn-glow px-8 py-3 border border-[#fffde8] rounded-full text-[#fffde8] font-medium transition-all hover:bg-[#24243e]/10"
           >
             Contact Me
           </a>

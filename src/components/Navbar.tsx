@@ -40,7 +40,7 @@ const Navbar = () => {
       initial="hidden"
       animate="visible"
       variants={navbarVariants}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed cursor-link top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'backdrop-blur-md bg-[#fffde8] shadow-lg' : 'bg-transparent'
       }`}
     >
