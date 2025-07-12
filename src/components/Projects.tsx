@@ -21,8 +21,8 @@ const projects = [
     codeLink: "https://github.com/nazlul/lifeliner",
   },
   {
-    title: "LOCALCONNECT AI",
-    description: "A life saving initiative by Baby Memorial Hospital.",
+    title: "LocalConnect AI",
+    description: "LocalConnect AI is a cutting-edge, fully responsive, scroll-animated web experience.",
     image: "/localconnectai.mp4",
     demoLink: "https://localconnectai.vercel.app/",
     codeLink: "https://github.com/nazlul/localconnectai",
