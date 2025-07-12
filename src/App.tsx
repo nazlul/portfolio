@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background from './components/Background';
 import ScrollImageSequence from './components/ScrollImageSequence';
+import LazySection from './components/LazySection';
 
 export function App() {
   return <div className="relative min-h-screen">
@@ -17,10 +18,10 @@ export function App() {
       <Navbar />
       <main className="relative z-10">
         <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
+        <LazySection><About /></LazySection>
+        <LazySection><Projects /></LazySection>
+        <LazySection><Skills /></LazySection>
+        <LazySection><Contact /></LazySection>
       </main>
       <Footer />
     </div>;

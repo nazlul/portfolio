@@ -49,7 +49,7 @@ export default function Scene() {
         model.scale.setScalar(scale);
         model.rotation.y = Math.PI / 3;
 
-        const screenTexture = new THREE.TextureLoader().load('/screen.png');
+        const screenTexture = new THREE.TextureLoader().load('/home.png');
         screenTexture.flipY = false;
         screenTexture.wrapS = screenTexture.wrapT = THREE.RepeatWrapping;
         screenTexture.repeat.set(-1.8, 3);
