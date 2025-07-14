@@ -12,8 +12,8 @@ import LazySection from './components/LazySection';
 
 export function App() {
   return <div className="relative min-h-screen">
-    <CustomCursor />
-    <ScrollImageSequence />
+      <CustomCursor />
+      <ScrollImageSequence />
       <Background />
       <Navbar />
       <main className="relative z-10">
