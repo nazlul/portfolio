@@ -40,8 +40,10 @@ const Navbar = () => {
       initial="hidden"
       animate="visible"
       variants={navbarVariants}
-      className={`fixed cursor-link top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'backdrop-blur-md bg-[#fffde8] shadow-lg' : 'bg-transparent'
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 cursor-link ${
+        isScrolled
+          ? 'backdrop-blur-md bg-[#fffde8] shadow-lg'
+          : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -49,7 +51,9 @@ const Navbar = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className={`text-2xl font-bold ${isScrolled ? 'text-[#a9170a]' : 'text-[#fffde8]'}`}
+          className={`text-2xl font-bold ${
+            isScrolled ? 'text-[#a9170a]' : 'text-[#fffde8]'
+          }`}
         >
           Portfolio
         </motion.div>
@@ -64,8 +68,10 @@ const Navbar = () => {
               initial="hidden"
               animate="visible"
               whileHover={{ scale: 1.1 }}
-              className={`focus:outline-none hover:text-[#a90a0a]  text-xl transition duration-100 transform ${
-                isScrolled ? 'text-[#6a1414] hover:text-[#a90a0a]' : 'text-[#fffde8] hover:text-[#faf4b6]'
+              className={`text-xl transition duration-100 transform focus:outline-none ${
+                isScrolled
+                  ? 'text-[#6a1414] hover:text-[#a90a0a]'
+                  : 'text-[#fffde8] hover:text-[#faf4b6]'
               }`}
             >
               {link.name}
@@ -75,32 +81,32 @@ const Navbar = () => {
 
         <div className="md:hidden">
           <button
+            aria-label="Toggle menu"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`${isScrolled ? 'text-[#a9170a]' : 'text-[#fffde8]'}`}
+            className={isScrolled ? 'text-[#a9170a]' : 'text-[#fffde8]'}
           >
             {isMobileMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
           </button>
         </div>
       </div>
 
-{isMobileMenuOpen && (
-  <div
-    className="fixed top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-[#a9170a]/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center space-y-6 text-2xl font-semibold text-[#fffde8]"
-    style={{ willChange: 'backdrop-filter' }}
-  >
-    {navLinks.map(link => (
-      <a
-        key={link.name}
-        href={link.href}
-        onClick={() => setIsMobileMenuOpen(false)}
-        className="hover:text-[#d1c9ab] transition"
-      >
-        {link.name}
-      </a>
-    ))}
-  </div>
-)}
-
+      {isMobileMenuOpen && (
+        <div
+          className="fixed top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-[#a9170a]/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center space-y-6 text-2xl font-semibold text-[#fffde8]"
+          style={{ willChange: 'backdrop-filter' }}
+        >
+          {navLinks.map(link => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="hover:text-[#d1c9ab] transition"
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+      )}
     </motion.header>
   )
 }

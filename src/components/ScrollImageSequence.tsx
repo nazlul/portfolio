@@ -3,127 +3,125 @@
 import { useEffect, useRef } from 'react'
 
 export default function ScrollImageSequence() {
-  const TOTAL_FRAMES = 600
+  const TOTAL_FRAMES = 300
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const imagesRef = useRef<HTMLImageElement[]>([])
-  const decodedFrames = useRef(new Set<number>())
-  const maxScrollRef = useRef(1)
-  const targetFrame = useRef(1)
-  const currentFrame = useRef(1)
-  const lastDrawnFrame = useRef(1)
-  const lastUpdateTime = useRef(0)
-  const UPDATE_INTERVAL = 33 
+  const stateRef = useRef({
+    images: Array(TOTAL_FRAMES).fill(null) as (HTMLImageElement | null)[],
+    decodedFrames: new Set<number>(),
+    currentFrame: 1,
+    lastDrawnFrame: 0,
+    scrollY: 0,
+    maxScroll: 1
+  })
+  const animationFrameId = useRef(0)
 
   useEffect(() => {
-    const loadAndDecode = async (i: number) => {
-      const img = new Image()
-      img.src = `/frames-1/frame_${String(i).padStart(4, '0')}.jpg`
-      try {
-        await img.decode()
-        decodedFrames.current.add(i)
-      } catch {
-        decodedFrames.current.add(i)
+    let cancelled = false
+    const { images, decodedFrames } = stateRef.current
+
+    const loadImages = async () => {
+      for (let i = 1; i <= TOTAL_FRAMES; i += 20) {
+        if (cancelled) break
+        await Promise.all(
+          Array.from({ length: 20 }, (_, j) => {
+            const frame = i + j
+            if (frame > TOTAL_FRAMES) return
+            return new Promise<void>(resolve => {
+              const img = new Image()
+              img.src = `/frames/frame_${String(frame).padStart(4, '0')}.jpg`
+              img.onload = () => {
+                decodedFrames.add(frame)
+                images[frame - 1] = img
+                resolve()
+              }
+              img.onerror = () => resolve()
+            })
+          })
+        )
       }
-      imagesRef.current[i - 1] = img
     }
 
-    for (let i = 1; i <= Math.min(50, TOTAL_FRAMES); i++) {
-      loadAndDecode(i)
-    }
-    for (let i = 51; i <= TOTAL_FRAMES; i++) {
-      setTimeout(() => loadAndDecode(i), (i - 50) * 100)
-    }
+    loadImages()
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
-    const ctx = canvasRef.current?.getContext('2d')
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const state = stateRef.current
+    let ticking = false
 
     const drawFrame = (frameIndex: number) => {
-      if (!ctx) return
-      const img = imagesRef.current[frameIndex - 1]
+      if (state.lastDrawnFrame === frameIndex) return
+      const img = state.images[frameIndex - 1]
       if (!img) return
 
-      const canvasRatio = ctx.canvas.width / ctx.canvas.height
+      const canvasRatio = canvas.width / canvas.height
       const imgRatio = img.width / img.height
-      let drawWidth = ctx.canvas.width
-      let drawHeight = ctx.canvas.height
-      let offsetX = 0
-      let offsetY = 0
-
+      
       if (imgRatio > canvasRatio) {
-        drawHeight = ctx.canvas.height
-        drawWidth = img.width * (drawHeight / img.height)
-        offsetX = -(drawWidth - ctx.canvas.width) / 2
+        const drawHeight = canvas.height
+        const drawWidth = img.width * (drawHeight / img.height)
+        const offsetX = -(drawWidth - canvas.width) / 2
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.drawImage(img, offsetX, 0, drawWidth, drawHeight)
       } else {
-        drawWidth = ctx.canvas.width
-        drawHeight = img.height * (drawWidth / img.width)
-        offsetY = -(drawHeight - ctx.canvas.height) / 2
+        const drawWidth = canvas.width
+        const drawHeight = img.height * (drawWidth / img.width)
+        const offsetY = -(drawHeight - canvas.height) / 2
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.drawImage(img, 0, offsetY, drawWidth, drawHeight)
       }
-
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight)
-      lastDrawnFrame.current = frameIndex
+      
+      state.lastDrawnFrame = frameIndex
     }
 
-    const animate = (time: number) => {
-      if (!canvasRef.current) return
-
-      const scrollY = window.scrollY
-      const maxScroll = maxScrollRef.current
-      const scrollFraction = scrollY / maxScroll
-      targetFrame.current = Math.min(
-        TOTAL_FRAMES,
-        Math.max(1, scrollFraction * TOTAL_FRAMES)
-      )
-
-      currentFrame.current += (targetFrame.current - currentFrame.current) * 0.1
-      const rounded = Math.round(currentFrame.current)
-
-      if (
-        time - lastUpdateTime.current > UPDATE_INTERVAL &&
-        decodedFrames.current.has(rounded)
-      ) {
+    const animate = () => {
+      const scrollFraction = Math.min(1, Math.max(0, state.scrollY / state.maxScroll))
+      const targetFrame = 1 + scrollFraction * (TOTAL_FRAMES - 1)
+      state.currentFrame += (targetFrame - state.currentFrame) * 0.2
+      const rounded = Math.round(state.currentFrame)
+      
+      if (state.decodedFrames.has(rounded)) {
         drawFrame(rounded)
-        lastUpdateTime.current = time
-      } else {
-        drawFrame(lastDrawnFrame.current)
       }
-
-      requestAnimationFrame(animate)
+      animationFrameId.current = requestAnimationFrame(animate)
     }
 
-    const onResize = () => {
-      if (!canvasRef.current) return
-      const canvas = canvasRef.current
+    const resize = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = window.innerWidth * dpr
       canvas.height = window.innerHeight * dpr
-      canvas.style.width = window.innerWidth + 'px'
-      canvas.style.height = window.innerHeight + 'px'
-
-      const ctx = canvas.getContext('2d')
-      if (ctx) ctx.setTransform(1, 0, 0, 1, 0, 0)
+      canvas.style.width = `${window.innerWidth}px`
+      canvas.style.height = `${window.innerHeight}px`
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      state.maxScroll = document.documentElement.scrollHeight - window.innerHeight || 1
     }
 
-    onResize()
-    window.addEventListener('resize', onResize)
+    const handleScroll = () => {
+      state.scrollY = window.scrollY
+      if (!ticking) {
+        requestAnimationFrame(() => { ticking = false })
+        ticking = true
+      }
+    }
 
-    requestAnimationFrame(animate)
+    animationFrameId.current = requestAnimationFrame(animate)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', resize)
+    resize()
 
     return () => {
-      window.removeEventListener('resize', onResize)
+      cancelAnimationFrame(animationFrameId.current)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', resize)
     }
   }, [])
 
-  useEffect(() => {
-    const updateMaxScroll = () => {
-      maxScrollRef.current = document.documentElement.scrollHeight - window.innerHeight
-    }
 
-    updateMaxScroll()
-    window.addEventListener('resize', updateMaxScroll)
-    return () => window.removeEventListener('resize', updateMaxScroll)
-  }, [])
 
   return (
     <canvas
@@ -133,7 +131,7 @@ export default function ScrollImageSequence() {
         top: 0,
         left: 0,
         width: '100vw',
-        height: '100vh',
+        height: '800vh',
         zIndex: 1,
         pointerEvents: 'none',
         backgroundColor: '#000',

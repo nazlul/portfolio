@@ -14,7 +14,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 const About = () => {
   const isMobile = useIsMobile();
   const [ref, inView] = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: isMobile ? 0.05 : 0.1,
     rootMargin: isMobile ? '-5% 0px -5% 0px' : '-2% 0px -2% 0px'
   });
@@ -23,7 +23,7 @@ const About = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 }
+      transition: { staggerChildren: 0.15 }
     }
   };
 
@@ -32,17 +32,17 @@ const About = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: isMobile ? 0.3 : 0.6 }
+      transition: { duration: isMobile ? 0.25 : 0.5 }
     }
   };
 
   return (
-    <section id="about" className="relative bg-[#fffde8]/80 py-20 px-4">
+    <section id="about" className="relative bg-[#fffde8]/70 py-20 px-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: isMobile ? 12 : 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: isMobile ? 0.5 : 0.8 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: isMobile ? 0.4 : 0.6 }}
           className="mb-16 text-center"
         >
           <h2 className="mb-2 text-3xl font-bold md:text-4xl">
@@ -56,13 +56,13 @@ const About = () => {
         <div className="grid gap-12 md:grid-cols-2 min-h-[40vh]">
           <motion.div
             initial={{ opacity: 0, x: isMobile ? 0 : -10 }}
-            animate={inView || isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: isMobile ? 0.5 : 0.8 }}
+            animate={inView || isMobile ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: isMobile ? 0.4 : 0.6 }}
             ref={ref}
             className="relative"
           >
-            <div className="absolute inset-0 rotate-3 rounded-lg bg-[#B8B1A8]" />
-            <div className="relative -rotate-3 transform rounded-lg transition-transform duration-500 hover:rotate-0">
+            <div className="absolute inset-0 rotate-3 rounded-lg bg-[#918a81]" />
+            <div className="relative -rotate-3 transform rounded-lg transition-transform duration-300 hover:rotate-0">
               <MagneticCard>
                 <h3 className="mb-4 text-2xl font-bold text-[#fffde8]">Who I Am</h3>
                 <p className="mb-4 text-[#fffde8]">
@@ -121,7 +121,7 @@ const About = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default About;
+export default About

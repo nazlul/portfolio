@@ -62,17 +62,25 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="py-12 px-4 sm:px-10 md:px-20 lg:px-40 bg-[#a9170a]/70">
-      <h2 className="text-3xl font-bold text-center mb-3 text-[#fffde8]">Projects</h2>
+    <section
+      id="projects"
+      className="py-12 px-4 sm:px-10 md:px-20 lg:px-40 bg-[#a9170a]/60"
+    >
+      <h2 className="text-3xl font-bold text-center mb-3 text-[#fffde8]">
+        Projects
+      </h2>
       <div className="mx-auto h-1 w-20 bg-[#fffde8] mb-10" />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center">
         {projects.map((project, idx) => (
-          <CardContainer key={idx} className="inter-var">
+          <CardContainer key={idx} className="inter-var justify-center">
             <CardBody className="relative group/card dark:hover:shadow-2xl dark:hover:shadow-white/[0.1] bg-[#fffde8] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
               <CardItem translateZ="70" className="text-xl font-bold text-[#a9170a]">
                 {project.title}
               </CardItem>
-              <CardItem translateZ="65" className="text-sm max-w-sm mt-2 text-[#a9170a]">
+              <CardItem
+                translateZ="65"
+                className="text-sm max-w-sm mt-2 text-[#a9170a]"
+              >
                 {project.description}
               </CardItem>
               <CardItem translateZ="80" className="w-full mt-4">
@@ -97,10 +105,10 @@ export default function Projects() {
                 ) : (
                   <img
                     src={project.image}
-                    height="1000"
-                    width="1000"
+                    height={1000}
+                    width={1000}
                     className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                    alt="Project screenshot"
+                    alt={`${project.title} screenshot`}
                   />
                 )}
               </CardItem>
@@ -123,6 +131,7 @@ export default function Projects() {
                   as="a"
                   href={project.codeLink}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="px-4 py-2 rounded-xl bg-white dark:bg-black text-black dark:text-white text-xs font-bold cursor-link"
                 >
                   <GithubIcon size={18} />

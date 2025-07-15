@@ -1,17 +1,16 @@
 "use client";
 
-import { motion } from "motion/react";
-
 export default function Background() {
   return (
-    <motion.div
-      aria-hidden="true"
-      className="fixed inset-0 -z-50 bg-gradient-to-tr from-[#a9170a] via-[#831010] to-[#2c0000]"
-      style={{
-        backgroundSize: "400% 400%",
-        animation: "gradientMoveX 8s ease-in-out infinite, gradientMoveY 7s ease-in-out infinite",
-      }}
-    >
+    <>
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-50 bg-gradient-to-tr from-[#a9170a] via-[#831010] to-[#2c0000]"
+        style={{
+          backgroundSize: "400% 400%",
+          animation: "gradientMoveX 8s ease-in-out infinite, gradientMoveY 7s ease-in-out infinite",
+        }}
+      />
       <style>
         {`
           @keyframes gradientMoveX {
@@ -28,6 +27,6 @@ export default function Background() {
           }
         `}
       </style>
-    </motion.div>
+    </>
   );
 }

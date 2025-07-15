@@ -1,7 +1,7 @@
 'use client';
 
-import * as THREE from 'three';
 import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 import { GLTFLoader, DRACOLoader } from 'three-stdlib';
 
 export default function Scene() {
@@ -19,8 +19,8 @@ export default function Scene() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     containerRef.current.appendChild(renderer.domElement);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1.2);
-    const directional = new THREE.DirectionalLight(0xffffff, 1.2);
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
+    const directional = new THREE.DirectionalLight(0xffffff, 1);
     directional.position.set(15, 30, 25);
     scene.add(ambient, directional);
 
@@ -31,58 +31,51 @@ export default function Scene() {
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
 
+    let model: THREE.Group | null = null;
     let lidPart1: THREE.Object3D | null = null;
     let lidPart2: THREE.Object3D | null = null;
-    let model: THREE.Group | null = null;
 
-    loader.load(
-      '/laptop-draco.glb',
-      (gltf) => {
-        model = gltf.scene;
+    loader.load('/laptop-draco.glb', (gltf) => {
+      model = gltf.scene;
 
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.sub(center);
 
-        const size = box.getSize(new THREE.Vector3());
-        const scale = 100 / Math.max(size.x, size.y, size.z);
-        model.scale.setScalar(scale);
-        model.rotation.y = Math.PI / 3;
+      const size = box.getSize(new THREE.Vector3());
+      const scale = 100 / Math.max(size.x, size.y, size.z);
+      model.scale.setScalar(scale);
+      model.rotation.y = Math.PI / 3;
 
-        const screenTexture = new THREE.TextureLoader().load('/home.png');
-        screenTexture.flipY = false;
-        screenTexture.wrapS = screenTexture.wrapT = THREE.RepeatWrapping;
-        screenTexture.repeat.set(-1.8, 3);
-        screenTexture.offset.set(-0.32, 0.29);
+      const texture = new THREE.TextureLoader().load('/home.png');
+      texture.flipY = false;
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(-1.8, 3);
+      texture.offset.set(-0.32, 0.29);
 
-        model.traverse((child) => {
-          if (!(child instanceof THREE.Mesh)) return;
-
-          switch (child.name) {
+      model.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          switch (mesh.name) {
             case 'LaptopLid_LaptopScreen_0':
-              child.material = new THREE.MeshStandardMaterial({
-                map: screenTexture,
+              mesh.material = new THREE.MeshStandardMaterial({
+                map: texture,
                 side: THREE.DoubleSide,
               });
-              lidPart2 = child;
+              lidPart2 = mesh;
               break;
             case 'LaptopLid_LaptopLid_0':
-              lidPart1 = child;
+              lidPart1 = mesh;
               break;
             case 'Cube002_MatTransRed_0':
-              const mat = child.material as THREE.MeshStandardMaterial;
-              mat.color.set('green');
+              (mesh.material as THREE.MeshStandardMaterial).color.set('green');
               break;
           }
-        });
+        }
+      });
 
-        scene.add(model);
-      },
-      undefined,
-      (error) => {
-        console.error('Model load error:', error);
-      }
-    );
+      scene.add(model);
+    });
 
     const scrollMax = 100;
     const camStartZ = 120;
@@ -90,37 +83,40 @@ export default function Scene() {
     const lidStart = -Math.PI / 1.8;
     const lidEnd = 0;
 
-    const animate = () => {
-      requestAnimationFrame(animate);
+    let scrollT = 0;
 
-      const t = Math.min(window.scrollY / scrollMax, 1);
-
-      camera.position.z = camStartZ - (camStartZ - camEndZ) * t;
-      camera.lookAt(new THREE.Vector3(0, 10, 0));
-
-      const lidRotation = lidStart * (1 - t) + lidEnd * t;
-
-      if (lidPart1) lidPart1.rotation.x = lidRotation;
-      if (lidPart2) lidPart2.rotation.x = lidRotation;
-
-      renderer.render(scene, camera);
+    const onScroll = () => {
+      scrollT = Math.min(window.scrollY / scrollMax, 1);
     };
 
-    animate();
+    window.addEventListener('scroll', onScroll);
 
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
+
     window.addEventListener('resize', onResize);
 
+    renderer.setAnimationLoop(() => {
+      camera.position.z = camStartZ - (camStartZ - camEndZ) * scrollT;
+      camera.lookAt(0, 10, 0);
+      const lidRotation = lidStart * (1 - scrollT) + lidEnd * scrollT;
+      if (lidPart1) lidPart1.rotation.x = lidRotation;
+      if (lidPart2) lidPart2.rotation.x = lidRotation;
+      renderer.render(scene, camera);
+    });
+
     return () => {
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
-      if (containerRef.current) {
+      renderer.setAnimationLoop(null);
+      renderer.dispose();
+      if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
-      renderer.dispose();
+      dracoLoader.dispose();
     };
   }, []);
 

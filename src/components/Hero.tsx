@@ -1,46 +1,46 @@
-'use client';
+'use client'
 
-import { useEffect, useRef, lazy, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import Scene from './Scene'
 
-const Scene = lazy(() => import('./Scene'));
+const name = 'Nazlul Rizan'
 
-const name = 'Nazlul Rizan';
-
-const Hero = () => {
-  const typingRef = useRef<HTMLDivElement>(null);
+export default function Hero() {
+  const typingRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef(0)
 
   useEffect(() => {
-    const text = 'I create amazing web experiences.';
-    const typingElement = typingRef.current;
-    if (!typingElement) return;
-    let i = 0;
-    const typingInterval = setInterval(() => {
-      if (i < text.length) {
-        typingElement.textContent = text.substring(0, i + 1) + '|';
-        i++;
+    const text = 'I create amazing web experiences.'
+    const typingElement = typingRef.current
+    if (!typingElement) return
+
+    let i = 0
+    const step = () => {
+      if (i <= text.length) {
+        typingElement.textContent = text.substring(0, i) + (i < text.length ? '|' : '')
+        i++
+        frameRef.current = requestAnimationFrame(step)
       } else {
-        typingElement.textContent = text;
-        clearInterval(typingInterval);
+        typingElement.textContent = text
+        cancelAnimationFrame(frameRef.current)
       }
-    }, 80);
-    return () => clearInterval(typingInterval);
-  }, []);
+    }
+    frameRef.current = requestAnimationFrame(step)
+
+    return () => cancelAnimationFrame(frameRef.current)
+  }, [])
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a]/70"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a]/60"
     >
-      <div className="max-w-5xl w-full z-10 px-4
-                      text-center
-                      md:text-left
-                      md:flex md:flex-col md:items-start md:justify-center
-                      lg:text-left">
+      <div className="max-w-5xl w-full z-10 px-4 text-center md:text-left md:flex md:flex-col md:items-start md:justify-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6"
         >
           <span className="text-lg md:text-xl text-[#fffde8]">Hello, I'm</span>
@@ -50,10 +50,9 @@ const Hero = () => {
           {name.split('').map((char, i) => (
             <motion.span
               key={i}
-              custom={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
+              transition={{ delay: i * 0.04 }}
               whileHover={{
                 y: -10,
                 textShadow: '0px 0px 8px #fffde8',
@@ -69,7 +68,7 @@ const Hero = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-[#fffde8]"
         >
           Web Developer
@@ -78,7 +77,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="text-xl md:text-3xl mb-8 text-[#fffde8]/80 h-10"
           ref={typingRef}
         >
@@ -88,7 +87,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col md:flex-row items-center justify-center lg:justify-start gap-4"
         >
           <a
@@ -109,15 +108,13 @@ const Hero = () => {
       </div>
 
       <div className="absolute inset-0 pointer-events-none lg:translate-x-[10vw]">
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
+        <Scene />
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 2 }}
+        transition={{ duration: 1, delay: 1.2 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10"
       >
         <a
@@ -161,7 +158,5 @@ const Hero = () => {
         }
       `}</style>
     </section>
-  );
-};
-
-export default Hero;
+  )
+}

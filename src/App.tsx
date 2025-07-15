@@ -16,7 +16,7 @@ export function App() {
       <ScrollImageSequence />
       <Background />
       <Navbar />
-      <main className="relative z-10">
+      <main className="relative z-10 backdrop-blur-sm">
         <Hero />
         <LazySection><About /></LazySection>
         <LazySection><Projects /></LazySection>
