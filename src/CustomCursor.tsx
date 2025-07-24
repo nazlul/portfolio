@@ -2,42 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
-function getRGBValues(color: string) {
-  const ctx = document.createElement('canvas').getContext('2d')!
-  ctx.fillStyle = color
-  const computed = ctx.fillStyle
-  const match = computed.match(/rgba?\((\d+), (\d+), (\d+)/)
-  if (!match) return [255, 255, 255]
-  return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])]
-}
-
-function getBrightness([r, g, b]: number[]) {
-  return (r * 299 + g * 587 + b * 114) / 1000
-}
-
-function findBackgroundColor(el: HTMLElement | null): string {
-  while (el && el !== document.documentElement) {
-    const bg = getComputedStyle(el).backgroundColor
-    if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-      return bg
-    }
-    el = el.parentElement
-  }
-  return getComputedStyle(document.documentElement).backgroundColor || 'rgb(255,255,255)'
-}
-
-function findCursorColor(el: HTMLElement | null): string | null {
-  while (el && el !== document.documentElement) {
-    const cursorColor = el.style.getPropertyValue('--cursor-bubble-color')
-    if (cursorColor) return cursorColor.trim()
-    el = el.parentElement
-  }
-  return null
-}
-
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [color, setColor] = useState('#fffde8')
   const [noPulse, setNoPulse] = useState(false)
   const [isTouch, setIsTouch] = useState(false)
 
@@ -53,16 +19,6 @@ export default function CustomCursor() {
       setPosition({ x: e.clientX, y: e.clientY })
       const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null
       setNoPulse(!!el?.closest('.cursor-link'))
-
-      const manualColor = findCursorColor(el)
-      if (manualColor) {
-        setColor(manualColor)
-        return
-      }
-      const bgColor = findBackgroundColor(el)
-      const rgb = getRGBValues(bgColor)
-      const brightness = getBrightness(rgb)
-      setColor(brightness >= 250 ? '#a9170a' : '#fffde8')
     }
 
     window.addEventListener('mousemove', move)
@@ -104,7 +60,8 @@ export default function CustomCursor() {
           height: 24,
           borderRadius: '50%',
           pointerEvents: 'none',
-          backgroundColor: color,
+          backgroundColor: 'rgba(255,255,255,1)',
+          mixBlendMode: 'difference',
           zIndex: 9999,
         }}
       />

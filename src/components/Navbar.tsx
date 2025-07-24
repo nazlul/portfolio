@@ -42,7 +42,7 @@ const Navbar = () => {
       variants={navbarVariants}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 cursor-link ${
         isScrolled
-          ? 'backdrop-blur-md bg-[#fffde8] shadow-lg'
+          ? 'backdrop-blur-md bg-[#fffde8]/60 shadow-lg'
           : 'bg-transparent'
       }`}
     >

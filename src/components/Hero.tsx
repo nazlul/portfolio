@@ -6,6 +6,7 @@ import Scene from './Scene'
 
 const name = 'Nazlul Rizan'
 
+
 export default function Hero() {
   const typingRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef(0)
@@ -14,7 +15,6 @@ export default function Hero() {
     const text = 'I create amazing web experiences.'
     const typingElement = typingRef.current
     if (!typingElement) return
-
     let i = 0
     const step = () => {
       if (i <= text.length) {
@@ -27,15 +27,15 @@ export default function Hero() {
       }
     }
     frameRef.current = requestAnimationFrame(step)
-
     return () => cancelAnimationFrame(frameRef.current)
   }, [])
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a]/60"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a] noise-bg"
     >
+      {/* All background SVG and animated circle elements removed */}
       <div className="max-w-5xl w-full z-10 px-4 text-center md:text-left md:flex md:flex-col md:items-start md:justify-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -45,7 +45,6 @@ export default function Hero() {
         >
           <span className="text-lg md:text-xl text-[#fffde8]">Hello, I'm</span>
         </motion.div>
-
         <h1 className="flex flex-wrap justify-center lg:justify-start text-4xl md:text-6xl lg:text-7xl mb-4 font-bold text-[#fffde8]">
           {name.split('').map((char, i) => (
             <motion.span
@@ -64,7 +63,6 @@ export default function Hero() {
             </motion.span>
           ))}
         </h1>
-
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -73,7 +71,6 @@ export default function Hero() {
         >
           Web Developer
         </motion.h2>
-
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -83,7 +80,6 @@ export default function Hero() {
         >
           |
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -106,11 +102,9 @@ export default function Hero() {
           </a>
         </motion.div>
       </div>
-
       <div className="absolute inset-0 pointer-events-none lg:translate-x-[10vw]">
         <Scene />
       </div>
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -131,7 +125,6 @@ export default function Hero() {
           </div>
         </a>
       </motion.div>
-
       <style>{`
         .btn-glow:hover {
           box-shadow:

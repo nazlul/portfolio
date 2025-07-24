@@ -64,8 +64,9 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-12 px-4 sm:px-10 md:px-20 lg:px-40 bg-[#a9170a]/60"
+      className="py-12 px-4 sm:px-10 md:px-20 lg:px-40 bg-[#a9170a] noise-bg"
     >
+      <svg width="120" height="120" style={{position:'absolute',bottom:40,left:80,opacity:0.10,zIndex:0}}><circle cx="60" cy="60" r="50" fill="#fffde8"/></svg>
       <h2 className="text-3xl font-bold text-center mb-3 text-[#fffde8]">
         Projects
       </h2>

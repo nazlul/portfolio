@@ -37,7 +37,8 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="relative bg-[#fffde8]/70 py-20 px-4">
+    <section id="about" className="relative bg-[#fffde8] noise-bg py-20 px-4">
+      {/* All background SVG elements removed */}
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: isMobile ? 12 : 20 }}

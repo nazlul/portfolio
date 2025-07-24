@@ -5,12 +5,14 @@ export default function Background() {
     <>
       <div
         aria-hidden="true"
-        className="fixed inset-0 -z-50 bg-gradient-to-tr from-[#a9170a] via-[#831010] to-[#2c0000]"
+        className="fixed inset-0 -z-50 bg-gradient-to-tr from-[#a9170a] via-[#831010] to-[#2c0000] noise-bg"
         style={{
           backgroundSize: "400% 400%",
           animation: "gradientMoveX 8s ease-in-out infinite, gradientMoveY 7s ease-in-out infinite",
         }}
-      />
+      >
+        {/* All background SVG elements removed */}
+      </div>
       <style>
         {`
           @keyframes gradientMoveX {
