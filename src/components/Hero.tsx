@@ -35,7 +35,6 @@ export default function Hero() {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#a9170a] noise-bg"
     >
-      {/* All background SVG and animated circle elements removed */}
       <div className="max-w-5xl w-full z-10 px-4 text-center md:text-left md:flex md:flex-col md:items-start md:justify-center lg:text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

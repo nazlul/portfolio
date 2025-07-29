@@ -38,7 +38,6 @@ const About = () => {
 
   return (
     <section id="about" className="relative bg-[#fffde8] noise-bg py-20 px-4">
-      {/* All background SVG elements removed */}
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: isMobile ? 12 : 20 }}
@@ -67,10 +66,10 @@ const About = () => {
               <MagneticCard>
                 <h3 className="mb-4 text-2xl font-bold text-[#fffde8]">Who I Am</h3>
                 <p className="mb-4 text-[#fffde8]">
-                  I'm a <span className='text-black font-bold'>Web Developer</span> who loves crafting clean, responsive UIs that feel smooth and look great. I focus on the little interactions that make a site feel alive, and I enjoy turning ideas into something real with code and design.
+                  I'm a <span className='text-black font-bold'>Web Developer</span> with around <span className='text-black font-bold'>2 years</span> experience, focused on building clean, responsive UIs. I love making sites feel smooth and interactive.
                 </p>
                 <p className="text-[#fffde8]">
-                  Lately, I've been diving into the world of blockchain and building frontend experiences for web3 apps. When I'm not coding, I'm exploring new design trends, messing around with creative side projects. Always learning, always building.
+                  Lately into web3 and blockchain. Always learning, always building, and always up for a new project.
                 </p>
               </MagneticCard>
             </div>
