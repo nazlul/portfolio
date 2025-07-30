@@ -86,7 +86,7 @@ export default function Hero() {
           className="flex flex-col md:flex-row items-center justify-center lg:justify-start gap-4"
         >
           <a
-            href="/Naz_Resume.pdf"
+            href="/Nazlul_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="cursor-link btn-glow px-8 py-3 bg-[#fffde8] rounded-full text-[#831010] font-medium transition-transform hover:scale-105"
