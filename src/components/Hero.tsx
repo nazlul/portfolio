@@ -68,7 +68,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-[#fffde8]"
         >
-          Web Developer
+          Full-Stack Web Developer
         </motion.h2>
         <motion.div
           initial={{ opacity: 0 }}

@@ -15,7 +15,6 @@ export function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2000);
-    // Optionally, you can add more logic to check for asset/font readiness
     return () => clearTimeout(timer);
   }, []);
   if (loading) return <LoadingScreen />;

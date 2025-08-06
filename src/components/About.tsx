@@ -66,7 +66,7 @@ const About = () => {
               <MagneticCard>
                 <h3 className="mb-4 text-2xl font-bold text-[#fffde8]">Who I Am</h3>
                 <p className="mb-4 text-[#fffde8]">
-                  I'm a <span className='text-black font-bold'>Web Developer</span> with around <span className='text-black font-bold'>2 years</span> experience, focused on building clean, responsive UIs. I love making sites feel smooth and interactive.
+                  I'm a <span className='text-black font-bold'>Full-Stack Web Developer</span> with around <span className='text-black font-bold'>2 years</span> experience, focused on building clean, responsive UIs. I love making sites feel smooth and interactive.
                 </p>
                 <p className="text-[#fffde8]">
                   Lately into web3 and blockchain. Always learning, always building, and always up for a new project.
