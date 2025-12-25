@@ -10,7 +10,7 @@ import LazySection from './components/LazySection';
 import LoadingScreen from './components/LoadingScreen';
 import { useEffect, useState } from 'react';
 //import { Canvas } from './components/Canvas';
-import { DrawingPalette } from './components/DrawingPalette';
+// import { DrawingPalette } from './components/DrawingPalette';
 
 export function App() {
 
@@ -25,7 +25,7 @@ export function App() {
 
   return <div className="relative min-h-screen">
      {/* <Canvas /> */}
-      <DrawingPalette />
+      {/* <DrawingPalette /> */}
       <Background />
       <Navbar />
       <main className="relative z-10 backdrop-blur-sm">
