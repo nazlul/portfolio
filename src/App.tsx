@@ -9,7 +9,7 @@ import Background from './components/Background';
 import LazySection from './components/LazySection';
 import LoadingScreen from './components/LoadingScreen';
 import { useEffect, useState } from 'react';
-import { Canvas } from './components/Canvas';
+//import { Canvas } from './components/Canvas';
 import { DrawingPalette } from './components/DrawingPalette';
 
 export function App() {
@@ -24,7 +24,7 @@ export function App() {
   if (loading) return <LoadingScreen />;
 
   return <div className="relative min-h-screen">
-      <Canvas />
+     {/* <Canvas /> */}
       <DrawingPalette />
       <Background />
       <Navbar />
