@@ -1,4 +1,3 @@
-import CustomCursor from './CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -10,16 +9,23 @@ import Background from './components/Background';
 import LazySection from './components/LazySection';
 import LoadingScreen from './components/LoadingScreen';
 import { useEffect, useState } from 'react';
+import { Canvas } from './components/Canvas';
+import { DrawingPalette } from './components/DrawingPalette';
 
 export function App() {
+
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
+
   if (loading) return <LoadingScreen />;
+
   return <div className="relative min-h-screen">
-      <CustomCursor />
+      <Canvas />
+      <DrawingPalette />
       <Background />
       <Navbar />
       <main className="relative z-10 backdrop-blur-sm">

@@ -16,10 +16,6 @@
   --background-color: #a9170a;
 }
 
-* {
-  cursor: none !important;
-}
-
 .cursor-link {
   --cursor-scale: 1;
 }
@@ -48,5 +44,12 @@ html, body {
   background-size: 200px 200px;
 }
 
-
+.canva {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  z-index: 20;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g transform="rotate(45 16 16)"><rect x="14" y="4" width="4" height="20" rx="2" fill="%23333" stroke="%23000" stroke-width="0.5"/><circle cx="16" cy="26" r="1.5" fill="%23ff0000"/><rect x="15" y="2" width="2" height="4" rx="1" fill="%23silver"/></g></svg>') 16 16, crosshair;
+}
 

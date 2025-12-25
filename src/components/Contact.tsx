@@ -28,14 +28,26 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !formState.name.trim() ||
+      !formState.email.trim() ||
+      !formState.subject.trim() ||
+      !formState.message.trim()
+    ) {
+      return;
+    }
+
     setIsSubmitting(true);
+
     const templateParams = {
-      from_name: formState.name,
-      from_email: formState.email,
+      name: formState.name,
+      email: formState.email,
       subject: formState.subject,
       message: formState.message,
       time: new Date().toLocaleString(),
     };
+
     try {
       await emailjs.send(
         "service_d3sfjbk",
@@ -43,6 +55,7 @@ const Contact = () => {
         templateParams,
         "CPHO9ZN9gKtGPH9ml"
       );
+
       setIsSubmitted(true);
       setFormState({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setIsSubmitted(false), 5000);
@@ -78,7 +91,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 px-4 relative bg-[#a9170a] noise-bg">
-      {/* All background SVG elements removed */}
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -91,8 +103,8 @@ const Contact = () => {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[#fffde8] to-[#B8B1A8] mx-auto mb-6" />
           <p className="text-[#fffde8] max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Feel free to reach
-            out and I'll get back to you as soon as possible.
+            Have a project in mind or want to collaborate? Feel free to reach out
+            and I'll get back to you as soon as possible.
           </p>
         </motion.div>
 
@@ -133,7 +145,7 @@ const Contact = () => {
                     {isEmail ? (
                       <a
                         href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${value}`}
-                        className="text-[#a9170a] underline cursor-link"
+                        className="text-[#a9170a] underline"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -159,116 +171,52 @@ const Contact = () => {
               className="bg-[#fffde8] p-8 rounded-xl shadow-lg"
             >
               {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-10"
-                >
-                  <div className="bg-green-500/20 p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                    <svg
-                      className="h-10 w-10 text-[#B8B1A8]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
+                <div className="text-center py-10">
                   <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
-                  <p className="text-gray-300">
-                    Thank you for reaching out. I'll get back to you soon.
-                  </p>
-                </motion.div>
+                  <p>Thank you for reaching out. I'll get back to you soon.</p>
+                </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {["name", "email", "subject"].map((field) => (
                     <div
                       key={field}
-                      className={`form-group ${
-                        field === "subject" ? "md:col-span-2" : ""
-                      }`}
+                      className={field === "subject" ? "md:col-span-2" : ""}
                     >
-                      <label
-                        htmlFor={field}
-                        className="block text-sm font-medium text-[#a9170a] mb-1 capitalize"
-                      >
+                      <label className="block text-sm font-medium text-[#a9170a] mb-1 capitalize">
                         {field}
                       </label>
                       <input
                         type={field === "email" ? "email" : "text"}
-                        id={field}
                         name={field}
                         value={(formState as any)[field]}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-[#dbd5ce] border border-[#a9170a] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#a9170a] text-black"
-                        placeholder={`Your ${field}`}
+                        className="w-full px-4 py-3 bg-[#dbd5ce] border border-[#a9170a] rounded-lg text-black"
                       />
                     </div>
                   ))}
-                  <div className="form-group md:col-span-2">
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-[#a9170a] mb-1"
-                    >
+
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-[#a9170a] mb-1">
                       Message
                     </label>
                     <textarea
-                      id="message"
                       name="message"
                       value={formState.message}
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 bg-[#dbd5ce] border border-[#a9170a] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#a9170a] text-black resize-none"
-                      placeholder="Your Message"
+                      className="w-full px-4 py-3 bg-[#dbd5ce] border border-[#a9170a] rounded-lg text-black resize-none"
                     />
                   </div>
-                  <div className="form-group md:col-span-2">
+
+                  <div className="md:col-span-2">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className={`w-full px-6 py-3 cursor-link bg-[#a9170a] text-[#fffde8] font-medium rounded-lg flex items-center justify-center gap-2 transition-all ${
-                        isSubmitting
-                          ? "opacity-70 cursor-not-allowed"
-                          : "hover:bg-[#831010]"
-                      }`}
+                      className="w-full px-6 py-3 bg-[#a9170a] text-[#fffde8] font-medium rounded-lg flex items-center justify-center gap-2"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <svg
-                            className="animate-spin h-5 w-5 text-[#a9170a]"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            />
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4z"
-                            />
-                          </svg>
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <SendIcon size={20} />
-                          Send Message
-                        </>
-                      )}
+                      {isSubmitting ? "Sending..." : <><SendIcon size={20} />Send Message</>}
                     </button>
                   </div>
                 </div>
